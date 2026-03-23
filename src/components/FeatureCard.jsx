@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 function FeatureCard({ icon: Icon, title, description }) {
   return (
     <div className="group rounded-2xl border border-warm-200/80 bg-white p-7 transition-all duration-300 hover:border-forest-200 hover:shadow-lg hover:shadow-forest-600/[0.04] dark:border-night-700/60 dark:bg-night-800/40 dark:hover:border-forest-800/50 dark:hover:shadow-forest-400/[0.03]">
