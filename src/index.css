@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-warm-25: #fefdfb;
+  --color-warm-50: #faf8f5;
+  --color-warm-100: #f5f0ea;
+  --color-warm-200: #ebe4d9;
+  --color-warm-300: #ddd2c2;
+  --color-warm-400: #c4b49e;
+  --color-warm-500: #a8937a;
+  --color-warm-600: #8d7762;
+  --color-warm-700: #74604e;
+  --color-warm-800: #5c4c3e;
+  --color-warm-900: #4a3e33;
+
+  --color-forest-50: #f0f5f0;
+  --color-forest-100: #dce8dc;
+  --color-forest-200: #b8d1b8;
+  --color-forest-300: #8fb78f;
+  --color-forest-400: #6a9b6a;
+  --color-forest-500: #4d7f4d;
+  --color-forest-600: #3d6b3d;
+  --color-forest-700: #325832;
+  --color-forest-800: #2a4a2a;
+  --color-forest-900: #1e361e;
+
+  --color-night-50: #f4f6f8;
+  --color-night-100: #e2e6eb;
+  --color-night-200: #c5ccd6;
+  --color-night-300: #9ba6b5;
+  --color-night-400: #6b7a8d;
+  --color-night-500: #4a5568;
+  --color-night-600: #3d4759;
+  --color-night-700: #2d3548;
+  --color-night-800: #1e2536;
+  --color-night-900: #151c2b;
+  --color-night-950: #0d1220;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    @apply bg-warm-25 text-night-700 transition-colors duration-300;
+  }
+
+  html.dark body {
+    @apply bg-night-950 text-night-200;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+}
