@@ -18,7 +18,13 @@ function Header({ isHomePage = false }) {
   const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useApp();
   const location = useLocation();
-
+  async function handleLogout() {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Failed to sign out:", error.message);
+    }
+  }
   useEffect(() => {
     setMobileOpen(false);
   }, [location]);
@@ -152,7 +158,7 @@ function Header({ isHomePage = false }) {
 
               <button
                 type="button"
-                onClick={logout}
+                onClick={handleLogout}
                 className={`inline-flex items-center gap-2 rounded-2xl border border-transparent px-4 py-2.5 text-[0.85rem] font-medium transition-all duration-300 ${
                   shouldOverlayHero
                     ? "text-white/80 hover:bg-white/10 hover:text-white"
@@ -224,9 +230,13 @@ function Header({ isHomePage = false }) {
             {user ? (
               <button
                 type="button"
-                onClick={() => {
-                  logout();
-                  setMobileOpen(false);
+                onClick={async () => {
+                  try {
+                    await logout();
+                    setMobileOpen(false);
+                  } catch (error) {
+                    console.error("Failed to sign out:", error.message);
+                  }
                 }}
                 className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-[0.95rem] font-medium text-night-600 transition-all duration-200 hover:bg-warm-100 dark:text-night-300 dark:hover:bg-night-800/80"
               >

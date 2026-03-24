@@ -1,5 +1,5 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import supabase from "../services/supabase";
 
 const AppContext = createContext();
 
@@ -17,6 +17,7 @@ function getInitialTheme() {
 function AppProvider({ children }) {
   const [isDark, setIsDark] = useState(getInitialTheme);
   const [user, setUser] = useState(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -30,23 +31,82 @@ function AppProvider({ children }) {
     }
   }, [isDark]);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadSession() {
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+
+      if (!isMounted) return;
+
+      if (error) {
+        console.error("Failed to get session:", error.message);
+        setUser(null);
+      } else {
+        setUser(session?.user ?? null);
+      }
+
+      setIsAuthLoading(false);
+    }
+
+    loadSession();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setIsAuthLoading(false);
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
   function toggleTheme() {
     setIsDark((prev) => !prev);
   }
 
-  function login(email) {
-    setUser({ email });
+  async function signInWithGoogle() {
+    const redirectTo = `${window.location.origin}/`;
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo,
+      },
+    });
+
+    if (error) {
+      throw error;
+    }
   }
 
-  function logout() {
-    setUser(null);
+  async function logout() {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      throw error;
+    }
   }
 
-  return (
-    <AppContext.Provider value={{ isDark, toggleTheme, user, login, logout }}>
-      {children}
-    </AppContext.Provider>
+  const value = useMemo(
+    () => ({
+      isDark,
+      toggleTheme,
+      user,
+      isAuthLoading,
+      signInWithGoogle,
+      logout,
+    }),
+    [isDark, user, isAuthLoading],
   );
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
 function useApp() {
@@ -59,4 +119,5 @@ function useApp() {
   return context;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { AppProvider, useApp };
