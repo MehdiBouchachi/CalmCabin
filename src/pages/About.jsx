@@ -1,6 +1,6 @@
 import { Heart, Leaf, Eye, Compass } from "lucide-react";
-import SectionHeading from "../components/SectionHeading";
-import FeatureCard from "../components/FeatureCard";
+import SectionHeading from "../ui/SectionHeading";
+import FeatureCard from "../ui/FeatureCard";
 
 function About() {
   const values = [

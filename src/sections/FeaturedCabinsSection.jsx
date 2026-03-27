@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import CabinCard from "../components/CabinCard";
-import SectionHeading from "../components/SectionHeading";
+import CabinCard from "../ui/CabinCard";
+import SectionHeading from "../ui/SectionHeading";
 import useCabins from "../features/cabins/useCabins";
 
 function FeaturedCabinsSection() {

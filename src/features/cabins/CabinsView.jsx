@@ -1,5 +1,5 @@
 import { useState } from "react";
-import EmptyState from "../../components/EmptyState";
+import EmptyState from "../../ui/EmptyState";
 import CabinsHeader from "./CabinsHeader";
 import CabinsResultsInfo from "./CabinsResultsInfo";
 import CabinsGrid from "./CabinsGrid";

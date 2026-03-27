@@ -1,4 +1,4 @@
-import SectionHeading from "../../components/SectionHeading";
+import SectionHeading from "../../ui/SectionHeading";
 import CabinsFilters from "./CabinsFilters";
 
 function CabinsHeader({ activeCategory, setActiveCategory }) {

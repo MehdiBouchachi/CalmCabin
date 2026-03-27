@@ -1,5 +1,5 @@
 import { Quote, Star } from "lucide-react";
-import SectionHeading from "../components/SectionHeading";
+import SectionHeading from "../ui/SectionHeading";
 
 const testimonials = [
   {

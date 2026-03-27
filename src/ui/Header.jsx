@@ -84,7 +84,7 @@ function Header({ isHomePage = false }) {
           : "fixed inset-x-0 top-0"
       } ${
         shouldOverlayHero
-          ? "border-b border-white/10 bg-transparent"
+          ? " bg-transparent"
           : "border-b border-warm-200/70 bg-warm-25/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)] backdrop-blur-2xl dark:border-night-800/70 dark:bg-night-950/80 dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
       }`}
     >
